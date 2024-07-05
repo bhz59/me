@@ -641,7 +641,7 @@ class BootstrapComponent extends _placeos_common__WEBPACK_IMPORTED_MODULE_1__.As
           localStorage.setItem('KIOSK.location', `${this.active_location.id}`);
         }
       }
-      const path = this._settings.get('app.default_route') || 'welcome';
+      const path = this._settings.get('app.default_route') || 'checkin';
       const route = path.split('/');
       route[0] = `/${route[0]}`;
       this._router.navigate(route);
@@ -657,7 +657,7 @@ class BootstrapComponent extends _placeos_common__WEBPACK_IMPORTED_MODULE_1__.As
       const building_id = localStorage.getItem('KIOSK.building');
       const level_id = localStorage.getItem('KIOSK.level');
       if (building_id && level_id) {
-        const path = this._settings.get('app.default_route') || 'welcome';
+        const path = this._settings.get('app.default_route') || 'checkin';
         const route = path.split('/');
         route[0] = `/${route[0]}`;
         this._router.navigate(route);
