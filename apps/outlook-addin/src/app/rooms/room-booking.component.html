@@ -1,0 +1,118 @@
+<div class="flex flex-1 flex-col z-0 m-0 bg-base-200 h-full overflow-y-auto">
+    <form *ngIf="form" [formGroup]="form">
+        <section
+            class="flex flex-col border-b border-base-200 py-5 items-center"
+        >
+            <div
+                class="flex flex-col w-[calc(100%-2rem)] max-w-[22.5rem] self-center"
+            >
+                <span class="flex text-xl font-bold mb-2"> Book Room</span>
+
+                <div class="flex flex-row">
+                    <div
+                        class="border border-base-200 rounded-full w-7 h-7 text-center"
+                    >
+                        <span>1</span>
+                    </div>
+                    <div class="ml-2 mb-4 text-base">Details</div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-sm font-bold mb-1">Add Title*</label>
+                    <mat-form-field appearance="outline">
+                        <input
+                            matInput
+                            placeholder="e.g Team meeting"
+                            formControlName="title"
+                            class="text-sm max-w-[22.5rem]"
+                        />
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-sm font-bold mb-1">Date*</label>
+                    <a-date-field
+                        [from]="min_date"
+                        formControlName="date"
+                        class="text-sm max-w-[22.5rem]"
+                    ></a-date-field>
+                </div>
+                <div class="flex flex-row -mb-5 space-x-2">
+                    <div class="flex flex-col w-1/2">
+                        <label class="text-sm font-bold mb-1">
+                            Start Time*
+                        </label>
+                        <a-time-field
+                            [ngModel]="form.value.date"
+                            (ngModelChange)="form.patchValue({ date: $event })"
+                            [ngModelOptions]="{ standalone: true }"
+                            class="text-sm max-w-[175px]"
+                        ></a-time-field>
+                    </div>
+                    <div class="flex flex-col w-1/2 ml-auto">
+                        <label class="text-sm font-bold mb-1">
+                            End Time*
+                        </label>
+                        <a-duration-field
+                            [time]="form.get('date')?.value"
+                            [max]="10 * 60"
+                            [min]="60"
+                            [step]="60"
+                            formControlName="duration"
+                            class="text-sm max-w-[175px]"
+                        ></a-duration-field>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="flex flex-col py-3 border-b border-base-200 items-center"
+        >
+            <div
+                class="flex flex-col w-[calc(100%-2rem)] max-w-[22.5rem] self-center"
+            >
+                <div class="flex flex-row">
+                    <div
+                        class="border border-base-200 rounded-full w-7 h-7 text-center"
+                    >
+                        <span>2</span>
+                    </div>
+                    <div class="ml-2 mb-4 text-base">Attendees</div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-sm font-bold mb-1">
+                        Add Attendees
+                    </label>
+
+                    <a-user-list-field
+                        formControlName="attendees"
+                        class="text-sm max-w-[22.5rem]"
+                        [custom_template]="true"
+                        (download)="downloadTemplate()"
+                    ></a-user-list-field>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-col py-3 items-center justify-center">
+            <button
+                btn
+                matRipple
+                type="submit"
+                (click)="findSpace()"
+                class="text-sm bg-secondary border-secondary min-w-[300px] max-w-[calc(100% - 2rem)] mx-auto"
+            >
+                <span class="text-sm">Find room</span>
+            </button>
+            <button
+                btn
+                matRipple
+                (click)="clearForm()"
+                class="text-sm bg-transparent text-secondary border-secondary my-2 min-w-[300px] max-w-[calc(100% - 2rem)] mx-auto"
+            >
+                <span class="text-sm">Clear form</span>
+            </button>
+        </section>
+    </form>
+</div>

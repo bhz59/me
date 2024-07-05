@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["**/*.ts", "src/function-file/function-file.js"],
+    "composite": true,
+    "compilerOptions": {
+        "types": ["jest", "node"]
+    },
+    "exclude": ["jest.config.ts"]
+}

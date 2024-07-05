@@ -1,0 +1,39 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+[content] h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+[content] h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+
+[content] p {
+    margin-bottom: 1rem;
+}
+
+[content] video {
+    width: 100%;
+    background-color: #212121;
+    border-radius: 1rem;
+}
+
+[content] img {
+    width: 100%;
+}
+
+[content] ol {
+    list-style: decimal;
+    padding-left: 1rem;
+}
+
