@@ -192,7 +192,7 @@ __webpack_require__.r(__webpack_exports__);
 var PlaceService = /** @class */ (function () {
     function PlaceService(http) {
         this.http = http;
-        this.apiUrl = "https://localhost:8443/api/staff/v1/bookings";
+        this.apiUrl = "/api/staff/v1/bookings";
         this.apiKey = "aed95f28b5a445eb2b30243a8524d85f.gN36Ag5rR7d7FMsfta5YNLi0TBCpxeyBopqTQvSueXo";
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
