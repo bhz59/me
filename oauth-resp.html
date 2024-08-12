@@ -19,73 +19,59 @@
                 return map;
             }
 
-            function convertPairStringToMap(str) {
-    var map = {};
-    var str_pairs = str.split('&');
-    for (var str_pair of str_pairs) {
-        var split_pair = str_pair.split('=');
-        if (split_pair[1]) {
-            map[decodeURIComponent(split_pair[0])] = decodeURIComponent(split_pair[1]);
-        }
-    }
-    return map;
-        }
-        
-        function handleAuthAndContinue() {
-            var origin = window.location.origin;
-            if (
-                window != window.top &&
-                window != window.parent &&
-                origin &&
-                origin === window.parent.location.origin
-            ) {
-        console.log('[PlaceOS][Auth] iFrame Detected. Processing message passing...');
-        var message = 'error';
-        if (window.location.hash.indexOf('access_token') !== -1) {
-            message = {
-                type: 'place-os',
-                token: window.location.hash.replace(/^.*access_token=([^&]+).*$/, '$1'),
-                expires_in: parseInt(
-                    window.location.hash.replace(/^.*expires_in=([^&]+).*$/, '$1')
-                )
-            };
-        } else if (window.location.search.indexOf('code') !== -1) {
-            message = {
-                type: 'place-os',
-                code: window.location.search.replace(/^.*code=([^&]+).*$/, '$1'),
-                state: window.location.search.replace(/^.*state=([^&]+).*$/, '$1')
-            };
-        }
-        try {
-            // Standards based browsers
-            parent.postMessage(message, origin);
-        } catch (e) {
-            console.error(e);
-        }
-        } else {
-            console.log('[PlaceOS][Auth] Main Frame Detected. Processing redirection...');
-            var data = window.location.search || window.location.hash;
-            data = data.replace(/(^#|^\?)/g, '');
-    
-            // Convert query parameters to path segments
-            var pathSegments = data.split('&').map(param => param.replace('=', '/')).join('/');
-    
-            // Construct the new path-based URL
-            var loc = (location.origin + location.pathname).replace('oauth-resp.html', '');
-            var continue_url = `${loc}${pathSegments}`;
-    
-            console.log('[PlaceOS][Auth] Redirecting to:', continue_url);
-    
-            window.location.href = continue_url;
-        }
-        }
-        
-        if (window.addEventListener) {
-            window.addEventListener('DOMContentLoaded', handleAuthAndContinue);
-        } else {
-            handleAuthAndContinue(); // IE 8
-        }
+            function handleAuthAndContinue() {
+                var origin = window.location.origin;
+                if (
+                    window != window.top &&
+                    window != window.parent &&
+                    origin &&
+                    origin === window.parent.location.origin
+                ) {
+                    console.log('[PlaceOS][Auth] iFrame Detected. Processing message passing...');
+                    var message = 'error';
+                    if (window.location.hash.indexOf('access_token') !== -1) {
+                        message = {
+                            type: 'place-os',
+                            token: window.location.hash.replace(/^.*access_token=([^&]+).*$/, '$1'),
+                            expires_in: parseInt(
+                                window.location.hash.replace(/^.*expires_in=([^&]+).*$/, '$1')
+                            )
+                        };
+                    } else if (window.location.search.indexOf('code') !== -1) {
+                        message = {
+                            type: 'place-os',
+                            code: window.location.search.replace(/^.*code=([^&]+).*$/, '$1'),
+                            state: window.location.search.replace(/^.*state=([^&]+).*$/, '$1')
+                        };
+                    }
+                    try {
+                        parent.postMessage(message, origin);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    console.log('[PlaceOS][Auth] Main Frame Detected. Processing redirection...');
+                    var data = window.location.search || window.location.hash;
+                    data = data.replace(/(^#|^\?)/g, '');
 
+                    // Convert query parameters to path segments
+                    var pathSegments = data.split('&').map(param => param.replace('=', '/')).join('/');
+
+                    // Construct the new path-based URL
+                    var loc = (location.origin + location.pathname).replace('oauth-resp.html', '');
+                    var continue_url = loc + '/' + pathSegments;
+
+                    console.log('[PlaceOS][Auth] Redirecting to:', continue_url);
+
+                    window.location.href = continue_url;
+                }
+            }
+
+            if (window.addEventListener) {
+                window.addEventListener('DOMContentLoaded', handleAuthAndContinue);
+            } else {
+                handleAuthAndContinue(); // IE 8
+            }
         </script>
     </body>
 </html>
